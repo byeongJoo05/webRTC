@@ -21,10 +21,60 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
+
+	implementation 'org.springframework.plugin:spring-plugin-core'
+
+	// commons: 자바의 API의 핵심 클래스의 조작에 대한 지원을 제공
+	implementation 'commons-io:commons-io'
+	implementation 'org.apache.commons:commons-collections4'
+	implementation 'org.apache.commons:commons-lang3'
+
+	// stomp 웹소켓 서버 사이드 테스트를 위한 의존성 추가
+	implementation 'org.springframework.boot:spring-boot-starter-mustache'
+	// stomp 관련 프론트 라이브러리
+	implementation 'org.webjars.bower:jquery'
+	implementation 'org.webjars:sockjs-client'
+	implementation 'org.webjars:stomp-websocket'
+	implementation 'org.webjars:webjars-locator'
+	// webRTC 클라이언트 의존성 추가
+	implementation 'org.webjars.bower:webrtc-adapter'
+	// kurento (미디어 서버) 관련 의존성 추가
+	implementation 'org.kurento:kurento-client'
+	implementation 'org.kurento:kurento-utils-js'
+
+	// retrofit: 서버와 클라이언트 간 http 통신을 위한 라이브러리
+	implementation 'com.squareup.retrofit2:retrofit'
+	implementation 'com.squareup.retrofit2:converter-jackson'
+	implementation 'com.squareup.okhttp3:logging-interceptor'
+
+	// guava: 가독성 있는 코드를 작성하기 위한 많은 유틸 클래스를 제공
+	implementation 'com.google.guava:guava:31.1-jre'
+
+	// jwt
+	implementation 'com.auth0:java-jwt'
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+	// openvidu 의존성
+	implementation 'io.openvidu:openvidu-java-client:2.25.0'
+
 	compileOnly 'org.projectlombok:lombok'
+	compileOnly 'javax.activation:javax.activation-api:1.2.0'
+
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
 	annotationProcessor 'org.projectlombok:lombok'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	annotationProcessor 'com.google.guava:guava:31.1-jre'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'com.jayway.jsonpath:json-path'
 }
 
 tasks.named('test') {
