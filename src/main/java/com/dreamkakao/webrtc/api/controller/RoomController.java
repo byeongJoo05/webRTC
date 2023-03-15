@@ -57,7 +57,7 @@ public class RoomController {
 	public ResponseEntity<RoomRes> makeRoom(@RequestBody MakeRoomReq makeRoomReq) throws OpenViduJavaClientException, OpenViduHttpException {
 		// room 번호 난수 생성
 		String roomId = RandomNumberUtil.getRandomNumber();
-
+		log.warn(roomId);
 		// room 관리 map에 저장
 		this.roomSessions.put(roomId, 1);
 
