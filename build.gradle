@@ -56,7 +56,7 @@ dependencies {
 
 	compileOnly 'org.projectlombok:lombok'
 	compileOnly 'javax.activation:javax.activation-api:1.2.0'
-
+	runtimeOnly 'com.h2database:h2'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
 	annotationProcessor 'org.projectlombok:lombok'

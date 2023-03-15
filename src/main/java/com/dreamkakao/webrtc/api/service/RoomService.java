@@ -1,33 +1,31 @@
 package com.dreamkakao.webrtc.api.service;
 
+import com.dreamkakao.webrtc.api.request.FindRoomReq;
+import com.dreamkakao.webrtc.api.request.MakeRoomReq;
+import com.dreamkakao.webrtc.api.response.RoomRes;
 import com.dreamkakao.webrtc.db.entity.Room;
-import com.dreamkakao.webrtc.db.entity.User;
 import com.dreamkakao.webrtc.db.repository.RoomRepository;
-import com.dreamkakao.webrtc.db.repository.UserRepository;
 import jakarta.transaction.Transactional;
-import org.apache.catalina.security.SecurityUtil;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Log4j2
 @Service
 public class RoomService {
 
 	private final RoomRepository roomRepository;
-	private final UserRepository userRepository;
 
 	@Autowired
-	public RoomService(RoomRepository roomRepository, UserRepository userRepository) {
+	public RoomService(RoomRepository roomRepository) {
 		this.roomRepository = roomRepository;
-		this.userRepository = userRepository;
 	}
 
 	// 방 만들기
 	@Transactional
-	public void makeRoom(String roomId, final makeRoomReq makeRoomReq) {
+	public void makeRoom(String roomId) {
 		Room room = Room.builder()
 				.roomId(roomId)
-				.isPublic(makeRoomReq.getPassword() == "" ? true : false)
-				.password(makeRoomReq.getPassword())
 				.status("ON")
 				.build();
 		roomRepository.save(room);
@@ -37,40 +35,39 @@ public class RoomService {
 	public Room findRoom(final FindRoomReq findRoomReq) {
 		Room room = roomRepository.findByRoomId(findRoomReq.getRoomId());
 		if (room == null) {
-			throw new RoomNotFoundException(findRoomReq.getRoomId());
-		}
-		if (!room.getPassword().equals(findRoomReq.getPassword())) {
-			throw new RoomPasswordNotMatchException(room.getRoomId());
+			log.warn("RoomNotFoundException");
+			log.warn(findRoomReq.getRoomId());
 		}
 		if (room.getStatus().equals("OFF")) {
-			throw new RoomNotFoundException(room.getStatus());
+			log.warn("RoomNotFoundException");
+			log.warn(room.getStatus());
 		}
 		if (room.getStatus().equals("GAME")) {
-			throw new RoomStatusIsNotAvailableException(room.getStatus());
+			log.warn("RoomStatusIsNotAvailableException");
+			log.warn(room.getStatus());
 		}
 		if (!room.getStatus().equals("ON")) {
-			throw new RoomStatusIsNotAvailableException(room.getStatus());
+			log.warn("RoomStatusIsNotAvailableException");
+			log.warn(room.getStatus());
 		}
-		return roomRepository.findByRoomIdAndAndPasswordAndStatus(findRoomReq.getRoomId(), findRoomReq.getPassword(), "ON").orElse(null);
+		return roomRepository.findByRoomIdAndStatus(findRoomReq.getRoomId(), "ON").orElse(null);
 	}
 
 	@Transactional
 	public void updateStatus(String roomId) {
 		Room updateRoom = roomRepository.findById(roomId).orElse(null);
 		if (updateRoom == null) {
-			throw new RoomNotFoundException(roomId);
+			log.warn("RoomNotFoundException");
+			log.warn(roomId);
 		}
 		updateRoom.setStatus("OFF");
 		roomRepository.save(updateRoom);
 	}
 
-	@Transactional(readOnly = true)
-	public RoomRes getRoomRes(String roomId, Integer gameType) {
+	@Transactional
+	public RoomRes getRoomRes(String roomId) {
 		RoomRes roomRes = new RoomRes();
-		User user = userRepository.findOneByEmail(SecurityUtil.getCurrentEmail().orElse("")).orElse(null);
 		roomRes.setRoomId(roomId);
-		roomRes.setGameType(gameType);
-		roomRes.setNickname(user.getNickname());
 		return roomRes;
 	}
 }

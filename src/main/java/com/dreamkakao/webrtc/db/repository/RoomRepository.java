@@ -13,5 +13,5 @@ public interface RoomRepository extends JpaRepository<Room, String> {
 	Room findByRoomId(String roomId);
 
 	// 방 id, password, status 조회
-	Optional<Room> findByRoomIdAndAndPasswordAndStatus(String roomId, String password, String Status);
+	Optional<Room> findByRoomIdAndStatus(String roomId, String Status);
 }

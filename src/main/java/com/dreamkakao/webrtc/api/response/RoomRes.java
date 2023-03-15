@@ -1,4 +1,4 @@
-package com.dreamkakao.webrtc.response;
+package com.dreamkakao.webrtc.api.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

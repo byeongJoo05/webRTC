@@ -1,8 +1,9 @@
-package com.dreamkakao.webrtc.controller;
+package com.dreamkakao.webrtc.api.controller;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.dreamkakao.webrtc.api.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -13,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dreamkakao.webrtc.db.entity.Room;
-import com.dreamkakao.webrtc.request.FindRoomReq;
-import com.dreamkakao.webrtc.request.LeaveRoomReq;
-import com.dreamkakao.webrtc.response.RoomRes;
+import com.dreamkakao.webrtc.api.request.FindRoomReq;
+import com.dreamkakao.webrtc.api.request.LeaveRoomReq;
+import com.dreamkakao.webrtc.api.response.RoomRes;
 import com.dreamkakao.webrtc.util.RandomNumberUtil;
 
 import io.openvidu.java.client.OpenVidu;
@@ -42,7 +43,8 @@ public class RoomController {
 	// RoomController에 접근할 때마다 OpenVidu 서버 관련 변수를 얻어옴
 	// TODO yml파일에서 url 도메인 수정해주기
 	@Autowired
-	public RoomController(@Value("${openvidu.secret}") String secret, @Value("${openvidu.url}") String openviduUrl) {
+	public RoomController(RoomService roomService, @Value("${openvidu.secret}") String secret, @Value("${openvidu.url}") String openviduUrl) {
+		this.roomService = roomService;
 		this.SECRET = secret;
 		this.OPENVIDU_URL = openviduUrl;
 		this.openVidu = new OpenVidu(OPENVIDU_URL, SECRET);

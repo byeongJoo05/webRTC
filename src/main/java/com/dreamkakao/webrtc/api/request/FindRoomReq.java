@@ -1,4 +1,4 @@
-package com.dreamkakao.webrtc.request;
+package com.dreamkakao.webrtc.api.request;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
