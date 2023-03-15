@@ -29,5 +29,5 @@ spring:
 
 # openvidu server 설정
 openvidu:
-  url: "https://localhost:4443"
-  secret: "MY_SECRET"
+  url: http://localhost:4443/
+  secret: MY_SECRET
