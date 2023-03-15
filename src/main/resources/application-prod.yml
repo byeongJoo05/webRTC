@@ -29,5 +29,5 @@ spring:
 
 # openvidu server 설정
 openvidu:
-  url: https://[도메인]
-  secret: MY_SECRET
+  url: "https://localhost:8000"
+  secret: "MY_SECRET"
