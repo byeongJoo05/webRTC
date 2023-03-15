@@ -1,6 +1,5 @@
 package com.dreamkakao.webrtc.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
