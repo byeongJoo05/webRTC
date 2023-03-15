@@ -3,6 +3,7 @@ package com.dreamkakao.webrtc.api.controller;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.dreamkakao.webrtc.api.request.MakeRoomReq;
 import com.dreamkakao.webrtc.api.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,9 +24,11 @@ import io.openvidu.java.client.OpenVidu;
 import io.openvidu.java.client.OpenViduHttpException;
 import io.openvidu.java.client.OpenViduJavaClientException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @RestController
 @RequiredArgsConstructor
+@Log4j2
 public class RoomController {
 	private final RoomService roomService;
 	private final int limit = 6;	// 방 인원 제한
@@ -41,7 +44,6 @@ public class RoomController {
 	private String SECRET;
 
 	// RoomController에 접근할 때마다 OpenVidu 서버 관련 변수를 얻어옴
-	// TODO yml파일에서 url 도메인 수정해주기
 	@Autowired
 	public RoomController(RoomService roomService, @Value("${openvidu.secret}") String secret, @Value("${openvidu.url}") String openviduUrl) {
 		this.roomService = roomService;
@@ -52,7 +54,7 @@ public class RoomController {
 
 	// room 생성
 	@PostMapping("/api/rooms")
-	public ResponseEntity<RoomRes> makeRoom() throws OpenViduJavaClientException, OpenViduHttpException {
+	public ResponseEntity<RoomRes> makeRoom(@RequestBody MakeRoomReq makeRoomReq) throws OpenViduJavaClientException, OpenViduHttpException {
 		// room 번호 난수 생성
 		String roomId = RandomNumberUtil.getRandomNumber();
 
@@ -75,13 +77,15 @@ public class RoomController {
 		// 검색하는 방이 존재하지 않을 경우
 		if(this.roomSessions.get(roomId) == null) {
 			System.out.println("방 존재하지 않음");
-			// todo 로그
+			log.warn("RoomNotFoundException");
+			log.warn(roomId);
 		}
 
 		// 인원초과일 경우
 		if(this.roomSessions.get(roomId) >= limit) {
 			System.out.println("인원 초과");
-			// todo 로그
+			log.warn("RoomStatusIsNotAvailableException");
+			log.warn(room.getStatus());
 		}
 
 		// room 관리 map에 저장
@@ -98,7 +102,8 @@ public class RoomController {
 		// 나가려는 방이 없다면
 		if(this.roomSessions.get(roomId) == null) {
 			System.out.println("예외!! 방이 존재하지않음");
-			// todo 로그
+			log.warn("RoomNotFoundException");
+			log.warn(roomId);
 		}
 
 		int cnt = this.roomSessions.get(roomId);	// 방에 남아있는 인원수

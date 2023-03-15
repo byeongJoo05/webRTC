@@ -9,10 +9,10 @@ import lombok.Setter;
 @Setter
 public class MakeRoomReq {
 
-	@NotNull(message = "gameType may not be empty")
-	private Integer gameType;
+	@NotNull(message = "name may not be empty")
+	private String name;	// 사용자 이름
 
 	@NotNull(message = "password may not be null")
 	@Size(max = 50)
-	private String password;
+	private String password;	// 비밀번호
 }
