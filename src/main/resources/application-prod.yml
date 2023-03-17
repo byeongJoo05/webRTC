@@ -14,18 +14,6 @@ spring:
 # 자동 재시작 사용 여부
     restart:
       enabled: true
-# smtp 설정
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: [stmp를 사용할 이메일]
-    password: [발급 받은 비밀번호]
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
 
 # openvidu server 설정
 openvidu:

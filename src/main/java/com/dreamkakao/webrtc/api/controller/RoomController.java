@@ -62,6 +62,7 @@ public class RoomController {
 	}
 
 	// 세션 초기화
+	@CrossOrigin(origins = "http://localhost:8888")
 	@PostMapping("/api/sessions")
 	public ResponseEntity<String> initializeSession(@RequestBody(required = false) Map<String, Object> params)
 		throws OpenViduJavaClientException, OpenViduHttpException {
@@ -72,6 +73,7 @@ public class RoomController {
 	}
 
 	// 커넥션 생성
+	@CrossOrigin(origins = "http://localhost:8888")
 	@PostMapping("/api/sessions/{sessionId}/connections")
 	public ResponseEntity<String> createConnection(@PathVariable("sessionId") String sessionId, @RequestBody(required = false) Map<String, Object> params)
 		throws OpenViduJavaClientException, OpenViduHttpException {
@@ -88,6 +90,7 @@ public class RoomController {
 	}
 
 	// room 생성
+	@CrossOrigin(origins = "http://localhost:8888")
 	@PostMapping("/api/rooms")
 	public ResponseEntity<RoomRes> makeRoom(@RequestBody MakeRoomReq makeRoomReq) throws
 		OpenViduJavaClientException,
@@ -105,6 +108,7 @@ public class RoomController {
 	}
 
 	// room 검색
+	@CrossOrigin(origins = "http://localhost:8888")
 	@PostMapping("/api/rooms/search")
 	public ResponseEntity<RoomRes> findRoom(@RequestBody FindRoomReq findRoomReq) throws
 		OpenViduJavaClientException,
@@ -134,6 +138,7 @@ public class RoomController {
 	}
 
 	// room 퇴장
+	@CrossOrigin(origins = "http://localhost:8888")
 	@PutMapping("/api/rooms")
 	public ResponseEntity leaveRoom(@RequestBody LeaveRoomReq leaveRoomReq) {
 		String roomId = leaveRoomReq.getRoomId();
