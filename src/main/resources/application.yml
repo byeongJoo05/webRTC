@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:h2:tcp://10.50.1.105:1521/demo
+    url: jdbc:h2:tcp://127.0.0.1:1521/webrtc
     username: sa
     password:
     driver-class-name: org.h2.Driver
