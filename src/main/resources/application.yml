@@ -16,4 +16,7 @@ spring:
 server:
   port: 8080
   ssl:
-    enabled: false
+    #enabled: false
+    key-store: classpath:keystore.12
+    key-store-password: MY_SECRET
+    key-store-type: PKCS12
